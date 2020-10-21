@@ -15,8 +15,6 @@ web-build/
 # .db
 *.db
 *.log
-
-
 # .env
 .env
 .env.local

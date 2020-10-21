@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "rocketseat-nlw3-happy-mobile",
-    "slug": "rocketseat-nlw3-happy-mobile",
+    "name": "Happy",
+    "slug": "Happy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2AB5D1"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,7 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mveraldo.happy"
+    },
+    "android": {
+      "package": "com.mveraldo.happy"
     },
     "web": {
       "favicon": "./assets/favicon.png"
