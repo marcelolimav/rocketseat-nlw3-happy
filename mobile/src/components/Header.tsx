@@ -1,4 +1,3 @@
-import { Nunito_600SemiBold } from '@expo-google-fonts/nunito';
 import React from 'react';
 import {
   Text,
@@ -10,11 +9,11 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 interface HeaderProps {
-  title: string;
+  title?: string;
   showCancel?: boolean;
 }
 
-export default function Header({ title, showCancel = true }: HeaderProps) {
+export default function Header({ title = "Adicione um orfanato", showCancel = true }: HeaderProps) {
   const navigation = useNavigation();
 
   function handleGoBackToAppHomePage() {

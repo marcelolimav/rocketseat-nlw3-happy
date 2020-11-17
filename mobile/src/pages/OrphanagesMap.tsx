@@ -1,12 +1,13 @@
-import React,{ useState} from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity} from 'react-native';
+import React,{ useState, useEffect, useContext} from 'react';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import MapView, { Marker, Callout ,PROVIDER_GOOGLE }  from 'react-native-maps';
 import { Feather } from '@expo/vector-icons';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import mapMarker from '../images/map-marker.png';
 import { RectButton } from 'react-native-gesture-handler';
+
 import api from '../services/api';
+import CoordinateContext from '../contexts/Coordinate';
 
 interface OrphanageItem {
   id: number,
@@ -15,22 +16,33 @@ interface OrphanageItem {
   longitude: number,
 }
 
-export default function OrphanageMap() {
-  const [orphanages, setOrphanages] = useState<OrphanageItem[]>([]);
-  const navigation = useNavigation();
+interface Params {
+  navigation: any;
+}
 
-  useFocusEffect(() => {
-    api.get('orphanages').then(response => {
-      setOrphanages(response.data);
-    });
-  });
+export default function OrphanageMap({navigation}: Params) {
+  const {coordinate , getCoordinate} = useContext(CoordinateContext);
+  const [orphanages, setOrphanages] = useState<OrphanageItem[]>([]);
+
+  useEffect(() => {
+
+    async function loadOrphanages() {
+      await api.get('orphanages').then(response => {
+        setOrphanages(response.data);
+      });
+
+    };
+
+    loadOrphanages();
+
+  },[]);
 
   function handleNavigateToOrphanageDetails(id: number) {
     navigation.navigate('OrphanageDetails', { id });
   }
 
   function handleNavigateToCreateOrphanage() {
-    navigation.navigate('SelectMapPosition');
+    navigation.navigate('CreateOrphanage', {coordinate});
   }
 
   return (
@@ -39,10 +51,10 @@ export default function OrphanageMap() {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: -23.448103,
-          longitude: -51.961190,
-          latitudeDelta: 0.008,
-          longitudeDelta: 0.008,
+          latitude: coordinate.latitude || -15.794185,
+          longitude: coordinate.longitude || -47.882174,
+          latitudeDelta: coordinate.latitude === 0? 100 : 0.08,
+          longitudeDelta: coordinate.latitude === 0? 100 : 0.08,
         }}
       >
         {orphanages.map(orphanage => {

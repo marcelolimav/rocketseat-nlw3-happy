@@ -56,10 +56,11 @@ export default function OrphanageDetails() {
       <View style={styles.imagesContainer}>
         <ScrollView horizontal pagingEnabled>
           {orphanage.images.map(image => {
-            <Image
+
+            return (<Image
               key={image.id}
               style={styles.image}
-              source={{ uri: image.url }} />
+              source={{ uri: image.url }} />)
 
           })}
         </ScrollView>
